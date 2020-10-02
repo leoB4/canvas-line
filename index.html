@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>movingLine</title>
+    <style>
+        body{
+            margin: 0;
+            width: 100vw;
+        }
+        canvas{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        // Définit le canevas et son contexte 2D
+        const canevas = document.getElementById("canvas");
+        canevas.width = window.innerWidth/3;
+        canevas.height = 500;
+        const contexte2D = canevas.getContext("2d");
+        contexte2D.fillStyle = "#DEDEDE";
+        contexte2D.fillRect(0,0, canevas.width, canevas.height);
+
+        let pDepart    = { x: 15,  y: 100  };
+        let pControle1 = { x: 15, y: 200  };
+        let pControle2 = { x: 15, y: 300  };
+        let pArrivee   = { x: 15, y: 400 };
+
+        contexte2D.beginPath();
+        contexte2D.moveTo(pArrivee.x, pDepart.y);
+        contexte2D.bezierCurveTo(pControle1.x, pControle1.y, pControle2.x, pControle2.y, pArrivee.x, pArrivee.y);
+        contexte2D.stroke();
+        // Define the points as {x, y}
+
+
+        canevas.addEventListener('mousemove', drawLine);
+        //canevas.addEventListener('mouseleave', reDrawLine);
+
+        function init (){
+            window.requestAnimationFrame(drawLine)
+        }
+
+
+        // Courbe cubique de Bézier
+        function drawLine(event){
+            let mouseX = event.clientX;
+            let mouseY = event.clientY;
+            console.log(mouseX, window.innerWidth);
+
+            if(mouseX > window.innerWidth/2 - canevas.width/2){
+                contexte2D.fillStyle = "#DEDEDE";
+                contexte2D.fillRect(0,0, canevas.width, canevas.height);
+                contexte2D.beginPath();
+                contexte2D.moveTo(pArrivee.x, pDepart.y);
+                contexte2D.bezierCurveTo(mouseX/3, mouseY, 0, 0, pArrivee.x, pArrivee.y);
+                contexte2D.stroke();
+            }else{
+                contexte2D.fillStyle = "#DEDEDE";
+                contexte2D.fillRect(0,0, canevas.width, canevas.height);
+                contexte2D.beginPath();
+                contexte2D.moveTo(pArrivee.x, pDepart.y);
+                contexte2D.bezierCurveTo(pControle1.x, pControle1.y, pControle2.x, pControle2.y, pArrivee.x, pArrivee.y);
+                contexte2D.stroke();
+            }
+
+
+
+        }
+
+         /* function reDrawLine(event){
+            let mouseX = event.clientX;
+            let mouseY = event.clientY;
+
+            contexte2D.fillStyle = "#DEDEDE";
+            contexte2D.fillRect(0,0, canevas.width, canevas.height);
+
+            contexte2D.beginPath();
+            contexte2D.moveTo(pArrivee.x, pDepart.y);
+            contexte2D.bezierCurveTo(pControle1.x, pControle1.y, pControle2.x, pControle2.y, pArrivee.x, pArrivee.y);
+            contexte2D.stroke();
+        } */
+
+        init();
+        // drawLine();
+    </script>
+</body>
+</html>
