@@ -58,7 +58,7 @@
                 contexte2D.fillRect(0,0, canevas.width, canevas.height);
                 contexte2D.beginPath();
                 contexte2D.moveTo(pArrivee.x, pDepart.y);
-                contexte2D.bezierCurveTo(mouseX/3, mouseY, 0, 0, pArrivee.x, pArrivee.y);
+                contexte2D.bezierCurveTo(mouseX/3, mouseY, pControle2.x, pControle2.y, pArrivee.x, pArrivee.y);
                 contexte2D.stroke();
             }else{
                 contexte2D.fillStyle = "#DEDEDE";
